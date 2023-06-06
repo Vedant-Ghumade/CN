@@ -1,0 +1,68 @@
+import java.util.*;
+class dijkstra
+{
+void lsr (int graph[][], int nodes, int source, int destination)
+  {
+    int count = graph.length;
+      boolean[] visitedVertex = new boolean[count];
+   int[] distance = new int[count];
+  for (int i = 0; i < count; i++)
+      {
+visitedVertex[i] = false;
+distance[i] = Integer.MAX_VALUE;
+      }
+    distance[source] = 0;
+  for (int i = 0; i < count; i++)
+      {
+int u = findMinDistance (distance, visitedVertex);
+visitedVertex[u] = true;
+for (int v = 0; v < count; v++)
+ {
+   if (!visitedVertex[v] && graph[u][v] != 0
+&& (distance[u] + graph[u][v] < distance[v]))
+     {
+distance[v] = distance[u] + graph[u][v];
+     }
+ }
+      }
+  System.out.println (String.
+format ("Distance from %s to %s is %s", source,
+destination, distance[destination]));
+  }
+  private static int findMinDistance (int[]distance, boolean[]visitedVertex)
+  {
+    int minDistance = Integer.MAX_VALUE;
+    int minDistanceVertex = -1;
+    for (int i = 0; i < distance.length; i++)
+      {
+if (!visitedVertex[i] && distance[i] < minDistance)
+ {
+   minDistance = distance[i];
+   minDistanceVertex = i;
+ }
+      }
+    return minDistanceVertex;
+  }
+  static Scanner sc = new Scanner (System.in);
+public static void main (String args[])
+  {
+   System.out.println ("Enter number of nodes in the graph: ");
+    int n = sc.nextInt ();
+    int graph[][] = new int[n][n];
+  System.out.println ("Enter the graph");
+    for (int i = 0; i < n; i++)
+      {
+for (int j = 0; j < n; j++)
+ {
+   System.out.print ("Enter weight between nodes " + i + " and " +j + " -> ");
+   graph[i][j] = sc.nextInt ();
+ }
+      }
+    int source, destination;
+    System.out.println ("Enter source and destination");
+    source = sc.nextInt ();
+    destination = sc.nextInt ();
+   dijkstra d = new dijkstra ();
+    d.lsr (graph, n, source, destination);
+  }
+}
